@@ -30,6 +30,8 @@
 #include "SharedLibrary_WIN32.cpp"
 #elif defined(POCO_OS_FAMILY_VMS)
 #include "SharedLibrary_VMS.cpp"
+#elif defined(POCO_ANDROID_STATIC)
+#include "SharedLibrary_ANDROID_STATIC.cpp"
 #endif
 
 
