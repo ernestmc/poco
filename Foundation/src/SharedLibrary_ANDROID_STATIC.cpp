@@ -33,8 +33,8 @@ FastMutex SharedLibraryImpl::_mutex;
 
 SharedLibraryImpl::SharedLibraryImpl()
 {
-	_handle = 1; // library is supposed to already be loaded in this
-	             // implementation
+	_handle = (void *)1; // library is supposed to already be 
+                             // loaded in this implementation.
 }
 
 

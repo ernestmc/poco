@@ -18,7 +18,9 @@
 #include "Poco/Exception.h"
 
 
-#if defined(hpux) || defined(_hpux)
+#if defined(POCO_ANDROID_STATIC)
+#include "SharedLibrary_ANDROID_STATIC.cpp"
+#elif defined(hpux) || defined(_hpux)
 #include "SharedLibrary_HPUX.cpp"
 #elif defined(POCO_VXWORKS)
 #include "SharedLibrary_VX.cpp"
@@ -30,8 +32,6 @@
 #include "SharedLibrary_WIN32.cpp"
 #elif defined(POCO_OS_FAMILY_VMS)
 #include "SharedLibrary_VMS.cpp"
-#elif defined(POCO_ANDROID_STATIC)
-#include "SharedLibrary_ANDROID_STATIC.cpp"
 #endif
 
 
