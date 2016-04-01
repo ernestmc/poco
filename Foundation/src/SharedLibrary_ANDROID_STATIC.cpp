@@ -46,33 +46,13 @@ SharedLibraryImpl::~SharedLibraryImpl()
 void SharedLibraryImpl::loadImpl(const std::string& path, int flags)
 {
 	FastMutex::ScopedLock lock(_mutex);
-
-	/*if (_handle) throw LibraryAlreadyLoadedException(path);
-	int realFlags = RTLD_LAZY;
-	if (flags & SHLIB_LOCAL_IMPL)
-		realFlags |= RTLD_LOCAL;
-	else
-		realFlags |= RTLD_GLOBAL;
-	_handle = dlopen(path.c_str(), realFlags);
-	if (!_handle)
-	{
-		const char* err = dlerror();
-		throw LibraryLoadException(err ? std::string(err) : path);
-	}*/
 	_path = path;
-
 }
 
 
 void SharedLibraryImpl::unloadImpl()
 {
 	FastMutex::ScopedLock lock(_mutex);
-
-	/*if (_handle)
-	{
-		dlclose(_handle);
-		_handle = 0;
-	}*/
 }
 
 
@@ -89,10 +69,12 @@ void* SharedLibraryImpl::findSymbolImpl(const std::string& name)
 	void* result = 0;
 	if (_handle)
 	{
-		// The RTLD_DEFAULT handle employes the same rules used by the runtime
-		// linker to resolve any symbol reference from the calling object.
+		// The RTLD_DEFAULT handle employs the same rules used
+                // by the runtime linker to resolve any symbol reference
+                // from the calling object.
+                // This means that the library is statically linked and
+                // therefor it's already loaded.
 		result = dlsym(RTLD_DEFAULT, name.c_str());
-		//result = dlsym(_handle, name.c_str());
 	}
 	return result;
 }
